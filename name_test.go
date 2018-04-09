@@ -1,6 +1,8 @@
 package nomenclature
 
-import "testing"
+import (
+	"testing"
+)
 
 var data1 = []string{
 	"helloWorld",
@@ -15,44 +17,53 @@ var data1 = []string{
 	"_hello__World_",
 	"_Hello__World_",
 
-	// TODO:
-	//	"HELLO_WORLD",
-	//	"_HELLO_WORLD_",
-	//	"_HELLO____WORLD_",
-	//	"_HEllo__WORLD_",
+	"HELLO_WORLD",
+	"_HELLO_WORLD_",
+	"_HELLO____WORLD_",
+	"_HEllo__WORLD_",
 }
 
-var data2 = []string{
-	"a_id",
-	"AId",
-	"A_Id",
-}
-
-func TestName(t *testing.T) {
+func TestName1(t *testing.T) {
 	for _, v := range data1 {
-		d := Hump2Snake(v)
+		d := ToLowerSnake(v)
 		if d != "hello_world" {
 			t.Error(v, d)
 		}
 	}
 	for _, v := range data1 {
-		d := Snake2Hump(v)
+		d := ToUpperHump(v)
 		if d != "HelloWorld" {
 			t.Error(v, d)
 		}
 	}
 
-	for _, v := range data2 {
-		d := Snake2Hump(v)
-		if d != "AId" {
+	for _, v := range data1 {
+		d := ToUpperSnake(v)
+		if d != "HELLO_WORLD" {
+			t.Error(v, d)
+		}
+	}
+	for _, v := range data1 {
+		d := ToLowerHump(v)
+		if d != "helloWorld" {
 			t.Error(v, d)
 		}
 	}
 
-	for _, v := range data2 {
-		d := Hump2Snake(v)
-		if d != "a_id" {
-			t.Error(v, d)
+}
+
+func BenchmarkToSnake(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		for _, v := range data1 {
+			ToLowerSnake(v)
+		}
+	}
+}
+
+func BenchmarkToHump(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		for _, v := range data1 {
+			ToUpperHump(v)
 		}
 	}
 }
