@@ -1,2 +1,1 @@
-# nomenclature
-nomenclature for grm name conversion
+# Name case
