@@ -1,9 +1,5 @@
 package namecase
 
-import (
-	"unsafe"
-)
-
 const (
 	pace = 'a' - 'A'
 	wall = '_'
@@ -71,7 +67,7 @@ func toSnake(s string, upper bool) string {
 		data = append(data, v)
 	}
 
-	return *(*string)(unsafe.Pointer(&data))
+	return toString(data)
 }
 
 func ToUpperHump(s string) string {
@@ -116,5 +112,5 @@ func toHump(s string, upper bool) string {
 	if !upper && len(data) != 0 {
 		data[0] += pace
 	}
-	return *(*string)(unsafe.Pointer(&data))
+	return toString(data)
 }

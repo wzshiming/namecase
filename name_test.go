@@ -51,19 +51,3 @@ func TestName1(t *testing.T) {
 	}
 
 }
-
-func BenchmarkToSnake(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		for _, v := range data1 {
-			ToLowerSnake(v)
-		}
-	}
-}
-
-func BenchmarkToHump(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		for _, v := range data1 {
-			ToUpperHump(v)
-		}
-	}
-}
