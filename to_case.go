@@ -5,10 +5,12 @@ const (
 	wall = '_'
 )
 
+// ToUpperSnake to XX_YY_ZZ
 func ToUpperSnake(s string) string {
 	return toSnake(s, true)
 }
 
+// ToLowerSnake to xx_yy_zz
 func ToLowerSnake(s string) string {
 	return toSnake(s, false)
 }
@@ -70,10 +72,12 @@ func toSnake(s string, upper bool) string {
 	return toString(data)
 }
 
+// ToUpperHump to XxYyZz
 func ToUpperHump(s string) string {
 	return toHump(s, true)
 }
 
+// ToLowerHump to xxYyZz
 func ToLowerHump(s string) string {
 	return toHump(s, false)
 }
