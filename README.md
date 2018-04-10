@@ -7,8 +7,6 @@
 
 Various naming styles change.
 
-[![Build Status](https://travis-ci.org/wzshiming/namecase.svg?branch=master)](https://travis-ci.org/wzshiming/namecase)
-
  - [English](./README.md)
  - [简体中文](./README_cn.md)
 
