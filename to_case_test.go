@@ -23,26 +23,34 @@ var data1 = []string{
 	"_HEllo__WORLD_",
 }
 
-func TestName1(t *testing.T) {
+func TestToLowerSnake(t *testing.T) {
 	for _, v := range data1 {
 		d := ToLowerSnake(v)
 		if d != "hello_world" {
 			t.Error(v, d)
 		}
 	}
+}
+
+func TestToUpperHump(t *testing.T) {
 	for _, v := range data1 {
 		d := ToUpperHump(v)
 		if d != "HelloWorld" {
 			t.Error(v, d)
 		}
 	}
+}
 
+func TestToUpperSnake(t *testing.T) {
 	for _, v := range data1 {
 		d := ToUpperSnake(v)
 		if d != "HELLO_WORLD" {
 			t.Error(v, d)
 		}
 	}
+}
+
+func TestToLowerHump(t *testing.T) {
 	for _, v := range data1 {
 		d := ToLowerHump(v)
 		if d != "helloWorld" {
