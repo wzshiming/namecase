@@ -18,6 +18,14 @@ go get -u -v gopkg.in/wzshiming/namecase.v2
 
 ## Usage
 
+- ToLowerHump all to xxYyZz
+
+- ToLowerSnake all to xx_yy_zz
+
+- ToUpperHump all to XxYyZz
+
+- ToUpperSnake all to XX_YY_ZZ
+
 [API Documentation](http://godoc.org/gopkg.in/wzshiming/namecase.v2)
 
 ## License
