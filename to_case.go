@@ -1,22 +1,64 @@
 package namecase
 
 const (
-	pace = 'a' - 'A'
-	wall = '_'
+	pace      = 'a' - 'A'
+	underline = '_'
+	strike    = '-'
+	space     = ' '
 )
+
+// ToUpperSpace to XX YY ZZ
+func ToUpperSpace(s string) string {
+	return toSplit(s, space, true)
+}
+
+// ToLowerSpace to xx yy zz
+func ToLowerSpace(s string) string {
+	return toSplit(s, space, false)
+}
+
+// ToUpperStrike to XX-YY-ZZ
+func ToUpperStrike(s string) string {
+	return toSplit(s, strike, true)
+}
+
+// ToLowerStrike to xx-yy-zz
+func ToLowerStrike(s string) string {
+	return toSplit(s, strike, false)
+}
 
 // ToUpperSnake to XX_YY_ZZ
 func ToUpperSnake(s string) string {
-	return toSnake(s, true)
+	return toSplit(s, underline, true)
 }
 
 // ToLowerSnake to xx_yy_zz
 func ToLowerSnake(s string) string {
-	return toSnake(s, false)
+	return toSplit(s, underline, false)
 }
 
-// ToSnake
-func toSnake(s string, upper bool) string {
+// ToPascal to XxYyZz
+func ToPascal(s string) string {
+	return toHump(s, true)
+}
+
+// ToUpperHump to XxYyZz
+func ToUpperHump(s string) string {
+	return toHump(s, true)
+}
+
+// ToCamel to xxYyZz
+func ToCamel(s string) string {
+	return toHump(s, false)
+}
+
+// ToLowerHump to xxYyZz
+func ToLowerHump(s string) string {
+	return toHump(s, false)
+}
+
+// toSplit
+func toSplit(s string, sep byte, upper bool) string {
 	data := make([]byte, 0, len(s)*2)
 	pu := false // 上一个是下划线
 	pb := false // 上一个是大写
@@ -30,7 +72,10 @@ func toSnake(s string, upper bool) string {
 
 		pu = cu
 		pb = cb
-		cu = v == wall
+
+		cs = v >= 'a' && v <= 'z'
+		cb = !cs && v >= 'A' && v <= 'Z'
+		cu = !(cb || cs)
 
 		// 去除无用的前缀
 		if !ib {
@@ -46,11 +91,8 @@ func toSnake(s string, upper bool) string {
 			continue
 		}
 
-		cb = v >= 'A' && v <= 'Z'
-
 		// 大小写 转换
 		if upper {
-			cs = !cb && v >= 'a' && v <= 'z'
 			if cs {
 				v -= pace
 			}
@@ -63,7 +105,7 @@ func toSnake(s string, upper bool) string {
 		if (cb && !pb && !pu) || //  当前是大写 上一个不是大写 上一个不是下划线
 			(iu && !cu) { // 之前忽略了一个下划线 当前不是下划线
 			iu = false
-			data = append(data, wall)
+			data = append(data, sep)
 		}
 
 		data = append(data, v)
@@ -72,17 +114,7 @@ func toSnake(s string, upper bool) string {
 	return toString(data)
 }
 
-// ToUpperHump to XxYyZz
-func ToUpperHump(s string) string {
-	return toHump(s, true)
-}
-
-// ToLowerHump to xxYyZz
-func ToLowerHump(s string) string {
-	return toHump(s, false)
-}
-
-// ToHump
+// toHump
 func toHump(s string, upper bool) string {
 	data := make([]byte, 0, len(s))
 	iu := true // 之前有下划线
@@ -92,15 +124,16 @@ func toHump(s string, upper bool) string {
 	cb := false // 当前是大写
 	for i := 0; i != len(s); i++ {
 		v := s[i]
-		if v == wall {
-			iu = true
-			continue
-		}
 
 		// ps = cs
 		pb = cb
 		cs = v >= 'a' && v <= 'z'
 		cb = !cs && v >= 'A' && v <= 'Z'
+
+		if !(cs || cb) {
+			iu = true
+			continue
+		}
 
 		if iu {
 			if cs { // 之前有下划线 当前是小写

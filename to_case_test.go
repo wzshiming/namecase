@@ -21,6 +21,19 @@ var data1 = []string{
 	"_HELLO_WORLD_",
 	"_HELLO____WORLD_",
 	"_HEllo__WORLD_",
+
+	"hello world",
+
+	"Hello world",
+}
+
+func TestToUpperSnake(t *testing.T) {
+	for _, v := range data1 {
+		d := ToUpperSnake(v)
+		if d != "HELLO_WORLD" {
+			t.Error(v, d)
+		}
+	}
 }
 
 func TestToLowerSnake(t *testing.T) {
@@ -32,19 +45,46 @@ func TestToLowerSnake(t *testing.T) {
 	}
 }
 
-func TestToUpperHump(t *testing.T) {
+func TestToUpperStrike(t *testing.T) {
 	for _, v := range data1 {
-		d := ToUpperHump(v)
-		if d != "HelloWorld" {
+		d := ToUpperStrike(v)
+		if d != "HELLO-WORLD" {
 			t.Error(v, d)
 		}
 	}
 }
 
-func TestToUpperSnake(t *testing.T) {
+func TestToLowerStrike(t *testing.T) {
 	for _, v := range data1 {
-		d := ToUpperSnake(v)
-		if d != "HELLO_WORLD" {
+		d := ToLowerStrike(v)
+		if d != "hello-world" {
+			t.Error(v, d)
+		}
+	}
+}
+
+func TestToUpperSpace(t *testing.T) {
+	for _, v := range data1 {
+		d := ToUpperSpace(v)
+		if d != "HELLO WORLD" {
+			t.Error(v, d)
+		}
+	}
+}
+
+func TestToLowerSpace(t *testing.T) {
+	for _, v := range data1 {
+		d := ToLowerSpace(v)
+		if d != "hello world" {
+			t.Error(v, d)
+		}
+	}
+}
+
+func TestToUpperHump(t *testing.T) {
+	for _, v := range data1 {
+		d := ToUpperHump(v)
+		if d != "HelloWorld" {
 			t.Error(v, d)
 		}
 	}
