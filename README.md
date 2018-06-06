@@ -1,33 +1,38 @@
 # Name case
 
 [![Build Status](https://travis-ci.org/wzshiming/namecase.svg?branch=master)](https://travis-ci.org/wzshiming/namecase)
-[![Go Report Card](https://goreportcard.com/badge/gopkg.in/wzshiming/namecase.v2)](https://goreportcard.com/report/gopkg.in/wzshiming/namecase.v2)
-[![GoDoc](https://godoc.org/gopkg.in/wzshiming/namecase.v2?status.svg)](https://godoc.org/gopkg.in/wzshiming/namecase.v2)
+[![Go Report Card](https://goreportcard.com/badge/github.com/wzshiming/namecase)](https://goreportcard.com/report/github.com/wzshiming/namecase)
+[![GoDoc](https://godoc.org/github.com/wzshiming/namecase?status.svg)](https://godoc.org/github.com/wzshiming/namecase)
 [![GitHub license](https://img.shields.io/github/license/wzshiming/namecase.svg)](https://github.com/wzshiming/namecase/blob/master/LICENSE)
 
 Various naming styles change.
 
- - [English](./README.md)
- - [简体中文](./README_cn.md)
+- [English](https://github.com/wzshiming/namecase/blob/master/README.md)
+- [简体中文](https://github.com/wzshiming/namecase/blob/master/README_cn.md)
 
 ## Install
 
 ``` shell
-go get -u -v gopkg.in/wzshiming/namecase.v2
+go get -u -v github.com/wzshiming/namecase
 ```
 
 ## Usage
 
-- ToLowerHump all to xxYyZz
+|               |                 |
+| ------------- | --------------- |
+| ToUpperSpace  | all to XX YY ZZ |
+| ToLowerSpace  | all to xx yy zz |
+| ToUpperStrike | all to XX-YY-ZZ |
+| ToLowerStrike | all to xx-yy-zz |
+| ToUpperSnake  | all to XX_YY_ZZ |
+| ToLowerSnake  | all to xx_yy_zz |
+| ToPascal      | all to XxYyZz   |
+| ToUpperHump   | all to XxYyZz   |
+| ToCamel       | all to xxYyZz   |
+| ToLowerHump   | all to xxYyZz   |
 
-- ToLowerSnake all to xx_yy_zz
-
-- ToUpperHump all to XxYyZz
-
-- ToUpperSnake all to XX_YY_ZZ
-
-[API Documentation](http://godoc.org/gopkg.in/wzshiming/namecase.v2)
+[API Documentation](http://godoc.org/github.com/wzshiming/namecase)
 
 ## License
 
-Pouch is licensed under the MIT License. See [LICENSE](./LICENSE) for the full license text.
+Pouch is licensed under the MIT License. See [LICENSE](https://github.com/wzshiming/namecase/blob/master/LICENSE) for the full license text.
