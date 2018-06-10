@@ -80,14 +80,20 @@ func toSplit(s string, sep byte, upper bool) string {
 		// 去除无用的前缀
 		if !ib {
 			if cu {
-				continue
+				if v == '_' || v == '-' || v == ' ' {
+					continue
+				}
 			}
 			ib = true
 		}
 
 		// 当前是下划线
 		if cu {
-			iu = true // 忽略下划线
+			if v == '_' || v == '-' || v == ' ' {
+				iu = true // 忽略下划线
+				continue
+			}
+			data = append(data, v)
 			continue
 		}
 
@@ -131,7 +137,11 @@ func toHump(s string, upper bool) string {
 		cb = !cs && v >= 'A' && v <= 'Z'
 
 		if !(cs || cb) {
-			iu = true
+			if v == '_' || v == '-' || v == ' ' {
+				iu = true
+				continue
+			}
+			data = append(data, v)
 			continue
 		}
 
