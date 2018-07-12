@@ -1,5 +1,9 @@
 package namecase
 
+import (
+	"unsafe"
+)
+
 const (
 	pace      = 'a' - 'A'
 	underline = '_'
@@ -57,7 +61,7 @@ func ToLowerHump(s string) string {
 	return toHump(s, false)
 }
 
-// toSplit
+// toSplit to xx yy zz
 func toSplit(s string, sep byte, upper bool) string {
 	data := make([]byte, 0, len(s)*2)
 	pu := false // 上一个是下划线
@@ -80,7 +84,7 @@ func toSplit(s string, sep byte, upper bool) string {
 		// 去除无用的前缀
 		if !ib {
 			if cu {
-				if v == '_' || v == '-' || v == ' ' {
+				if v == underline || v == strike || v == space {
 					continue
 				}
 			}
@@ -89,7 +93,7 @@ func toSplit(s string, sep byte, upper bool) string {
 
 		// 当前是下划线
 		if cu {
-			if v == '_' || v == '-' || v == ' ' {
+			if v == underline || v == strike || v == space {
 				iu = true // 忽略下划线
 				continue
 			}
@@ -117,10 +121,10 @@ func toSplit(s string, sep byte, upper bool) string {
 		data = append(data, v)
 	}
 
-	return toString(data)
+	return *(*string)(unsafe.Pointer(&data))
 }
 
-// toHump
+// toHump to xxYyZz
 func toHump(s string, upper bool) string {
 	data := make([]byte, 0, len(s))
 	iu := true // 之前有下划线
@@ -137,7 +141,7 @@ func toHump(s string, upper bool) string {
 		cb = !cs && v >= 'A' && v <= 'Z'
 
 		if !(cs || cb) {
-			if v == '_' || v == '-' || v == ' ' {
+			if v == underline || v == strike || v == space {
 				iu = true
 				continue
 			}
@@ -159,5 +163,5 @@ func toHump(s string, upper bool) string {
 	if !upper && len(data) != 0 {
 		data[0] += pace
 	}
-	return toString(data)
+	return *(*string)(unsafe.Pointer(&data))
 }
