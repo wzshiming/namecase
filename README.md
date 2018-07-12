@@ -4,6 +4,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/wzshiming/namecase)](https://goreportcard.com/report/github.com/wzshiming/namecase)
 [![GoDoc](https://godoc.org/github.com/wzshiming/namecase?status.svg)](https://godoc.org/github.com/wzshiming/namecase)
 [![GitHub license](https://img.shields.io/github/license/wzshiming/namecase.svg)](https://github.com/wzshiming/namecase/blob/master/LICENSE)
+[![cover.run](https://cover.run/go/github.com/wzshiming/namecase.svg?style=flat&tag=golang-1.10)](https://cover.run/go?tag=golang-1.10&repo=github.com%2Fwzshiming%2Fnamecase)
 
 Various naming styles change.
 
