@@ -19,18 +19,20 @@ go get -u -v github.com/wzshiming/namecase
 
 ## Usage
 
-|               |                 |
-| ------------- | --------------- |
-| ToUpperSpace  | all to XX YY ZZ |
-| ToLowerSpace  | all to xx yy zz |
-| ToUpperStrike | all to XX-YY-ZZ |
-| ToLowerStrike | all to xx-yy-zz |
-| ToUpperSnake  | all to XX_YY_ZZ |
-| ToLowerSnake  | all to xx_yy_zz |
-| ToPascal      | all to XxYyZz   |
-| ToUpperHump   | all to XxYyZz   |
-| ToCamel       | all to xxYyZz   |
-| ToLowerHump   | all to xxYyZz   |
+|                        |                 |
+| ---------------------- | --------------- |
+| ToUpperSpace           | all to XX YY ZZ |
+| ToLowerSpace           | all to xx yy zz |
+| ToUpperStrike          | all to XX-YY-ZZ |
+| ToLowerStrike          | all to xx-yy-zz |
+| ToUpperSnake           | all to XX_YY_ZZ |
+| ToLowerSnake           | all to xx_yy_zz |
+| ToPascal               | all to XxYyZz   |
+| ToCamel                | all to xxYyZz   |
+| ToUpperHump            | all to XxYyZz   |
+| ToLowerHump            | all to xxYyZz   |
+| ToUpperHumpInitialisms | all to XxYyZzID |
+| ToLowerHumpInitialisms | all to xxYyZzID |
 
 [API Documentation](http://godoc.org/github.com/wzshiming/namecase)
 
