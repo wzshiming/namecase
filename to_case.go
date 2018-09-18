@@ -32,7 +32,7 @@ func ToLowerSnake(s string) string {
 
 // ToPascal to XxYyZz
 func ToPascal(s string) string {
-	return ToLowerHump(s)
+	return ToUpperHump(s)
 }
 
 // ToCamel to xxYyZz
