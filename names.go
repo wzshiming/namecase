@@ -1,7 +1,9 @@
 package namecase
 
 import (
-	"strings"
+	"bytes"
+	"unicode/utf8"
+	"unsafe"
 )
 
 // Name is a name made up of words
@@ -9,109 +11,104 @@ type Name []Word
 
 // ParseName parse the name string
 func ParseName(name string) Name {
-	names := Name{}
-	var currWord []rune
-
-	prev := ohterRuneCase
-	curr := ohterRuneCase
-
-	clear := func() {
-		currWord = currWord[:0]
+	if name == "" {
+		return nil
 	}
+	names := make(Name, 0, len(name)/2+1)
 
-	splitCurr := func() {
-		switch len(currWord) {
-		case 0:
-		case 1:
-			wordKind := ohterWordCase
-			switch getKind(currWord[0]) {
-			case lowerRuneCase:
-				wordKind = lowerWordCase
-			case upperRuneCase:
-				wordKind = upperWordCase
-			}
+	wordCase := ohterWordCase
+	prevRuneCase := ohterRuneCase
+	currRuneCase := ohterRuneCase
+	prevWordIndex := 0
+	currRuneIndex := 0
+
+	appends := func() {
+		if prevWordIndex != currRuneIndex {
 			names = append(names, Word{
-				word: string(currWord),
-				kind: wordKind,
+				kind: wordCase,
+				word: name[prevWordIndex:currRuneIndex],
 			})
-			clear()
-		default:
-			wordKind := ohterWordCase
-			switch getKind(currWord[0]) {
-			case lowerRuneCase:
-				wordKind = lowerWordCase
-			case upperRuneCase:
-				switch getKind(currWord[len(currWord)-1]) {
-				case lowerRuneCase:
-					wordKind = titleWordCase
-				case upperRuneCase:
-					wordKind = upperWordCase
-				}
-			}
-			names = append(names, Word{
-				word: string(currWord),
-				kind: wordKind,
-			})
-			clear()
+			prevWordIndex = currRuneIndex
 		}
 	}
-	splitPrev := func() {
-		prevRune := currWord[len(currWord)-1]
-		currWord = currWord[:len(currWord)-1]
-		splitCurr()
-		currWord = append(currWord, prevRune)
-	}
 
-	step := func(r rune) {
-		curr = getKind(r)
-		switch prev {
-		case splitRuneCase:
-			if curr != splitRuneCase {
-				clear()
-			}
+	for currRuneIndex != len(name) {
+		r, s := utf8.DecodeRuneInString(name[currRuneIndex:])
+		currRuneCase = getKind(r)
+
+		switch currRuneCase {
 		case ohterRuneCase:
-			if curr != ohterRuneCase {
-				splitCurr()
+			if prevRuneCase != ohterRuneCase {
+				appends()
+			}
+			wordCase = ohterWordCase
+		case splitRuneCase:
+			if prevRuneCase != splitRuneCase {
+				appends()
+			}
+			wordCase = splitWordCase
+		case upperRuneCase:
+			if prevRuneCase != upperRuneCase {
+				appends()
+				wordCase = upperWordCase
 			}
 		case lowerRuneCase:
-			if curr != lowerRuneCase {
-				splitCurr()
-			}
-		case upperRuneCase:
-			switch curr {
-			case lowerRuneCase:
-				splitPrev()
+			switch prevRuneCase {
 			case ohterRuneCase, splitRuneCase, eofRuneCase:
-				splitCurr()
+				appends()
+				wordCase = lowerWordCase
+			}
+			switch wordCase {
+			case upperWordCase:
+				wordCase = titleWordCase
 			}
 		}
-		currWord = append(currWord, r)
-		prev = curr
+		prevRuneCase = currRuneCase
+		currRuneIndex += s
 	}
-
-	for _, r := range []rune(name) {
-		step(r)
-	}
-	step(0)
+	appends()
 	return names
 }
 
+// FormatSnake returns format to snake
 func (n Name) FormatSnake(wordKind wordKind, split string) string {
-	sum := make([]string, 0, len(n))
-	for _, word := range n {
-		sum = append(sum, word.convert(wordKind))
+	if len(n) == 0 {
+		return ""
 	}
-	return strings.Join(sum, split)
+
+	buf := bytes.NewBuffer(nil)
+	for _, word := range n {
+		if word.kind == splitWordCase {
+			continue
+		}
+
+		if buf.Len() != 0 {
+			buf.WriteString(split)
+		}
+		buf.WriteString(word.convert(wordKind))
+	}
+	bytes := buf.Bytes()
+	return *(*string)(unsafe.Pointer(&bytes))
 }
 
+// FormatCamel returns format to camel
 func (n Name) FormatCamel(firstKind wordKind, ohterKind wordKind) string {
 	if len(n) == 0 {
 		return ""
 	}
-	sum := make([]string, 0, len(n))
-	sum = append(sum, n[0].convert(firstKind))
-	for _, word := range n[1:] {
-		sum = append(sum, word.convert(ohterKind))
+
+	buf := bytes.NewBuffer(nil)
+	for _, word := range n {
+		if word.kind == splitWordCase {
+			continue
+		}
+
+		if buf.Len() == 0 {
+			buf.WriteString(word.convert(firstKind))
+		} else {
+			buf.WriteString(word.convert(ohterKind))
+		}
 	}
-	return strings.Join(sum, "")
+	bytes := buf.Bytes()
+	return *(*string)(unsafe.Pointer(&bytes))
 }

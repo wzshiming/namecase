@@ -1,7 +1,7 @@
 package namecase
 
 import (
-	"strings"
+	"unsafe"
 )
 
 // Word Is the word and kind
@@ -68,18 +68,45 @@ func (w Word) Upper() string {
 }
 
 func title(s string) string {
-	if s == "" {
-		return s
+	buf := make([]byte, 0, len(s))
+	for i := 0; i != len(s); i++ {
+		ch := s[i]
+		if i == 0 {
+			if ch >= 'a' && ch <= 'z' {
+				ch -= 'a' - 'A'
+			}
+		} else {
+			if ch >= 'A' && ch <= 'Z' {
+				ch += 'a' - 'A'
+			}
+		}
+		buf = append(buf, ch)
 	}
-	return strings.ToUpper(s[:1]) + strings.ToLower(s[1:])
+	return *(*string)(unsafe.Pointer(&buf))
 }
 
 func lower(s string) string {
-	return strings.ToLower(s)
+	buf := make([]byte, 0, len(s))
+	for i := 0; i != len(s); i++ {
+		ch := s[i]
+		if ch >= 'A' && ch <= 'Z' {
+			ch += 'a' - 'A'
+		}
+		buf = append(buf, ch)
+	}
+	return *(*string)(unsafe.Pointer(&buf))
 }
 
 func upper(s string) string {
-	return strings.ToUpper(s)
+	buf := make([]byte, 0, len(s))
+	for i := 0; i != len(s); i++ {
+		ch := s[i]
+		if ch >= 'a' && ch <= 'z' {
+			ch -= 'a' - 'A'
+		}
+		buf = append(buf, ch)
+	}
+	return *(*string)(unsafe.Pointer(&buf))
 }
 
 // commonInitialisms is a set of common initialisms.
