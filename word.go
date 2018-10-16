@@ -1,9 +1,5 @@
 package namecase
 
-import (
-	"unsafe"
-)
-
 // Word Is the word and kind
 type Word struct {
 	kind wordKind
@@ -65,90 +61,4 @@ func (w Word) Upper() string {
 	default:
 		return w.word
 	}
-}
-
-func title(s string) string {
-	buf := make([]byte, 0, len(s))
-	for i := 0; i != len(s); i++ {
-		ch := s[i]
-		if i == 0 {
-			if ch >= 'a' && ch <= 'z' {
-				ch -= 'a' - 'A'
-			}
-		} else {
-			if ch >= 'A' && ch <= 'Z' {
-				ch += 'a' - 'A'
-			}
-		}
-		buf = append(buf, ch)
-	}
-	return *(*string)(unsafe.Pointer(&buf))
-}
-
-func lower(s string) string {
-	buf := make([]byte, 0, len(s))
-	for i := 0; i != len(s); i++ {
-		ch := s[i]
-		if ch >= 'A' && ch <= 'Z' {
-			ch += 'a' - 'A'
-		}
-		buf = append(buf, ch)
-	}
-	return *(*string)(unsafe.Pointer(&buf))
-}
-
-func upper(s string) string {
-	buf := make([]byte, 0, len(s))
-	for i := 0; i != len(s); i++ {
-		ch := s[i]
-		if ch >= 'a' && ch <= 'z' {
-			ch -= 'a' - 'A'
-		}
-		buf = append(buf, ch)
-	}
-	return *(*string)(unsafe.Pointer(&buf))
-}
-
-// commonInitialisms is a set of common initialisms.
-// Only add entries that are highly unlikely to be non-initialisms.
-// For instance, "ID" is fine (Freudian code is rare), but "AND" is not.
-var commonInitialisms = map[string]bool{
-	"ACL":   true,
-	"API":   true,
-	"ASCII": true,
-	"CPU":   true,
-	"CSS":   true,
-	"DNS":   true,
-	"EOF":   true,
-	"GUID":  true,
-	"HTML":  true,
-	"HTTP":  true,
-	"HTTPS": true,
-	"ID":    true,
-	"IP":    true,
-	"JSON":  true,
-	"LHS":   true,
-	"QPS":   true,
-	"RAM":   true,
-	"RHS":   true,
-	"RPC":   true,
-	"SLA":   true,
-	"SMTP":  true,
-	"SQL":   true,
-	"SSH":   true,
-	"TCP":   true,
-	"TLS":   true,
-	"TTL":   true,
-	"UDP":   true,
-	"UI":    true,
-	"UID":   true,
-	"UUID":  true,
-	"URI":   true,
-	"URL":   true,
-	"UTF":   true,
-	"VM":    true,
-	"XML":   true,
-	"XMPP":  true,
-	"XSRF":  true,
-	"XSS":   true,
 }

@@ -37,26 +37,21 @@ func ParseName(name string) Name {
 		currRuneCase = getKind(r)
 
 		switch currRuneCase {
-		case ohterRuneCase:
-			if prevRuneCase != ohterRuneCase {
+		case splitRuneCase, ohterRuneCase:
+			if prevRuneCase != currRuneCase {
 				appends()
 			}
-			wordCase = ohterWordCase
-		case splitRuneCase:
-			if prevRuneCase != splitRuneCase {
-				appends()
-			}
-			wordCase = splitWordCase
+			wordCase = wordKind(currRuneCase)
 		case upperRuneCase:
-			if prevRuneCase != upperRuneCase {
+			if prevRuneCase != currRuneCase {
 				appends()
-				wordCase = upperWordCase
+				wordCase = wordKind(currRuneCase)
 			}
 		case lowerRuneCase:
 			switch prevRuneCase {
 			case ohterRuneCase, splitRuneCase, eofRuneCase:
 				appends()
-				wordCase = lowerWordCase
+				wordCase = wordKind(currRuneCase)
 			}
 			switch wordCase {
 			case upperWordCase:

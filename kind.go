@@ -1,5 +1,9 @@
 package namecase
 
+import (
+	"unicode"
+)
+
 type runeKind uint8
 
 const (
@@ -12,14 +16,14 @@ const (
 )
 
 func getKind(r rune) runeKind {
-	switch r {
-	case 0:
+	switch {
+	case r == 0:
 		return eofRuneCase
-	case 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z':
+	case unicode.IsUpper(r):
 		return upperRuneCase
-	case 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z':
+	case unicode.IsLower(r):
 		return lowerRuneCase
-	case ' ', '-', '_':
+	case unicode.IsSpace(r), unicode.IsPunct(r):
 		return splitRuneCase
 	default:
 		return ohterRuneCase
@@ -32,8 +36,8 @@ const (
 	_ wordKind = iota
 	lowerWordCase
 	upperWordCase
+	splitWordCase
+	ohterWordCase
 	titleWordCase
 	initialismsWordCase
-	ohterWordCase
-	splitWordCase
 )
