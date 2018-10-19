@@ -23,6 +23,7 @@ var testdataBascis = []string{
 	"hello world",
 
 	"Hello world",
+	"HelloWORLD",
 }
 
 func TestToUpperSnake(t *testing.T) {
