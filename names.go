@@ -16,9 +16,9 @@ func ParseName(name string) Name {
 	}
 	names := make(Name, 0, len(name)/2+1)
 
-	wordCase := ohterWordCase
-	prevRuneCase := ohterRuneCase
-	currRuneCase := ohterRuneCase
+	wordCase := otherWordCase
+	prevRuneCase := otherRuneCase
+	currRuneCase := otherRuneCase
 	prevWordIndex := 0
 	currRuneIndex := 0
 
@@ -37,7 +37,7 @@ func ParseName(name string) Name {
 		currRuneCase = getKind(r)
 
 		switch currRuneCase {
-		case splitRuneCase, ohterRuneCase:
+		case splitRuneCase, otherRuneCase:
 			if prevRuneCase != currRuneCase {
 				appends()
 			}
@@ -49,7 +49,7 @@ func ParseName(name string) Name {
 			}
 		case lowerRuneCase:
 			switch prevRuneCase {
-			case ohterRuneCase, splitRuneCase, eofRuneCase:
+			case otherRuneCase, splitRuneCase, eofRuneCase:
 				appends()
 				wordCase = wordKind(currRuneCase)
 			}

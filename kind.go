@@ -11,7 +11,7 @@ const (
 	lowerRuneCase
 	upperRuneCase
 	splitRuneCase
-	ohterRuneCase
+	otherRuneCase
 	eofRuneCase
 )
 
@@ -26,7 +26,7 @@ func getKind(r rune) runeKind {
 	case unicode.IsSpace(r), unicode.IsPunct(r):
 		return splitRuneCase
 	default:
-		return ohterRuneCase
+		return otherRuneCase
 	}
 }
 
@@ -37,7 +37,7 @@ const (
 	lowerWordCase
 	upperWordCase
 	splitWordCase
-	ohterWordCase
+	otherWordCase
 	titleWordCase
 	initialismsWordCase
 )
