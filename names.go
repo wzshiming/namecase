@@ -87,7 +87,7 @@ func (n Name) FormatSnake(wordKind wordKind, split string) string {
 }
 
 // FormatCamel returns format to camel
-func (n Name) FormatCamel(firstKind wordKind, ohterKind wordKind) string {
+func (n Name) FormatCamel(firstKind wordKind, otherKind wordKind) string {
 	if len(n) == 0 {
 		return ""
 	}
@@ -101,7 +101,7 @@ func (n Name) FormatCamel(firstKind wordKind, ohterKind wordKind) string {
 		if buf.Len() == 0 {
 			buf.WriteString(word.convert(firstKind))
 		} else {
-			buf.WriteString(word.convert(ohterKind))
+			buf.WriteString(word.convert(otherKind))
 		}
 	}
 	bytes := buf.Bytes()
