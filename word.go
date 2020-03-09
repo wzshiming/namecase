@@ -27,8 +27,8 @@ func (w Word) convert(kind wordKind) string {
 
 // Initialisms If it's an acronym, it's all capital letters.
 func (w Word) Initialisms() string {
-	if word := upper(w.word); commonInitialisms[word] {
-		return word
+	if _, ok := commonInitialisms[w.word]; ok {
+		return upper(w.word)
 	}
 	return w.Title()
 }
