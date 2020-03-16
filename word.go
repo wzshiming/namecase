@@ -1,16 +1,16 @@
 package namecase
 
-// Word Is the word and kind
-type Word struct {
+// word Is the word and kind
+type word struct {
 	kind wordKind
 	word string
 }
 
-func (w Word) String() string {
+func (w word) String() string {
 	return w.word
 }
 
-func (w Word) convert(kind wordKind) string {
+func (w word) convert(kind wordKind) string {
 	switch kind {
 	case upperWordCase:
 		return w.Upper()
@@ -26,7 +26,7 @@ func (w Word) convert(kind wordKind) string {
 }
 
 // Initialisms If it's an acronym, it's all capital letters.
-func (w Word) Initialisms() string {
+func (w word) Initialisms() string {
 	if _, ok := commonInitialisms[w.word]; ok {
 		return upper(w.word)
 	}
@@ -34,7 +34,7 @@ func (w Word) Initialisms() string {
 }
 
 // Title returns capitalize the first letter of other lower case.
-func (w Word) Title() string {
+func (w word) Title() string {
 	switch w.kind {
 	case lowerWordCase, upperWordCase:
 		return title(string(w.word))
@@ -44,7 +44,7 @@ func (w Word) Title() string {
 }
 
 // Lower returns all lowercase.
-func (w Word) Lower() string {
+func (w word) Lower() string {
 	switch w.kind {
 	case upperWordCase, titleWordCase:
 		return lower(string(w.word))
@@ -54,7 +54,7 @@ func (w Word) Lower() string {
 }
 
 // Upper returns all uppercase.
-func (w Word) Upper() string {
+func (w word) Upper() string {
 	switch w.kind {
 	case lowerWordCase, titleWordCase:
 		return upper(string(w.word))

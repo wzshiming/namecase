@@ -6,15 +6,15 @@ import (
 	"unsafe"
 )
 
-// Name is a name made up of words
-type Name []Word
+// namecase is a namecase made up of words
+type namecase []word
 
-// ParseName parse the name string
-func ParseName(name string) Name {
+// parseNamecase parse the namecase string
+func parseNamecase(name string) namecase {
 	if name == "" {
 		return nil
 	}
-	names := make(Name, 0, len(name)/2+1)
+	names := make([]word, 0, len(name)/2+1)
 
 	wordCase := otherWordCase
 	prevRuneCase := otherRuneCase
@@ -24,7 +24,7 @@ func ParseName(name string) Name {
 
 	appends := func() {
 		if prevWordIndex != currRuneIndex {
-			names = append(names, Word{
+			names = append(names, word{
 				kind: wordCase,
 				word: name[prevWordIndex:currRuneIndex],
 			})
@@ -66,7 +66,7 @@ func ParseName(name string) Name {
 }
 
 // FormatSnake returns format to snake
-func (n Name) FormatSnake(wordKind wordKind, split string) string {
+func (n namecase) FormatSnake(wordKind wordKind, split string) string {
 	if len(n) == 0 {
 		return ""
 	}
@@ -87,7 +87,7 @@ func (n Name) FormatSnake(wordKind wordKind, split string) string {
 }
 
 // FormatCamel returns format to camel
-func (n Name) FormatCamel(firstKind wordKind, otherKind wordKind) string {
+func (n namecase) FormatCamel(firstKind wordKind, otherKind wordKind) string {
 	if len(n) == 0 {
 		return ""
 	}
